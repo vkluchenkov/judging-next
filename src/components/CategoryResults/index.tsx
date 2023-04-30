@@ -63,10 +63,12 @@ export const CategoryResults: React.FC<CategoryResultsProps> = ({
         css={styles.grid}
         rows={rows}
         columns={columns}
-        disableRowSelectionOnClick
+        pageSize={100}
+        disableSelectionOnClick
         disableColumnFilter
         disableColumnMenu
         disableColumnSelector
+        disableVirtualization
         hideFooter
         autoHeight
         data-testid='grid'

@@ -1,4 +1,4 @@
-import { Result } from '../CategoryResults/types';
+import { Result } from '@/src/components/CategoryResults/types';
 
 export const results: Result[] = [
   {

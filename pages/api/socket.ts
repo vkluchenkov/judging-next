@@ -2,6 +2,8 @@ import { NextApiResponseServerIO } from '@/src/types/socket';
 import { NextApiRequest } from 'next';
 import { Server as ServerIO } from 'socket.io';
 import { Server as NetServer } from 'http';
+import { LoginPayload } from '@/src/components/Login/types';
+import { messageHandler } from '@/src/socketHandlers/messageHandler';
 
 export const config = {
   api: {
@@ -18,9 +20,7 @@ const SocketHandler = (req: NextApiRequest, res: NextApiResponseServerIO) => {
     const io = new ServerIO(httpServer);
     res.socket.server.io = io;
 
-    io.on('connection', (socket) => {
-      socket.emit('hello', 'test message');
-    });
+    io.on('connection', (socket) => messageHandler({ io, socket }));
   }
   res.end();
 };

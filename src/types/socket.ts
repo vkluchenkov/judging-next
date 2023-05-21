@@ -1,6 +1,7 @@
 import { Server as NetServer, Socket } from 'net';
 import { NextApiResponse } from 'next';
-import { Server as SocketIOServer } from 'socket.io';
+import { Server as SocketIOServer, Socket as SocketIo } from 'socket.io';
+import { DefaultEventsMap } from '@socket.io/component-emitter';
 
 export type NextApiResponseServerIO = NextApiResponse & {
   socket: Socket & {
@@ -9,3 +10,6 @@ export type NextApiResponseServerIO = NextApiResponse & {
     };
   };
 };
+
+export type Io = SocketIOServer<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any>;
+export type IoSocket = SocketIo<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any>;

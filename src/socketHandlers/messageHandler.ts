@@ -1,9 +1,8 @@
 import { LoginPayload } from '../components/Login/types';
 import { LoginHandler } from './loginHandler';
 import { Io, IoSocket } from '../types/socket';
-import { handleSocketError } from '../errors/handleSocketError';
-import { ServerError } from '../errors/ServerError';
-import { AxiosError } from 'axios';
+import { handleAxiosError } from '../errors/handleAxiosError';
+import axios, { AxiosError } from 'axios';
 
 interface MessageHandlerProps {
   io: Io;
@@ -17,8 +16,10 @@ export const messageHandler = ({ io, socket }: MessageHandlerProps) => {
     try {
       await LoginHandler({ loginPayload, socket, io });
     } catch (error: any) {
-      const err = error as AxiosError;
-      handleSocketError({ err, socket });
+      if (axios.isAxiosError(error)) {
+        const err = error as AxiosError;
+        handleAxiosError({ err, socket });
+      } else console.log(error);
     }
   });
 };

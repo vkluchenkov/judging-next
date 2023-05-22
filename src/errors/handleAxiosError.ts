@@ -1,7 +1,7 @@
 import { ErrorDto } from '../api/types';
-import { HandleSocketErrorArgs } from './types';
+import { HandleAxiosErrorArgs } from './types';
 
-export const handleSocketError = ({ err, socket }: HandleSocketErrorArgs) => {
+export const handleAxiosError = ({ err, socket }: HandleAxiosErrorArgs) => {
   const statusCode = err.response?.status || 500;
   const message = err.response?.status ? err.response?.statusText : 'Server error';
 

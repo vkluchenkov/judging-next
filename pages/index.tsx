@@ -11,21 +11,26 @@ export default function Home() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [socket, setSocket] = useState<Socket<DefaultEventsMap, DefaultEventsMap> | null>(null);
   const [judgeName, setJudgeName] = useState('');
+  const [loginError, setloginError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (socket)
-      socket.on('loggedIn', (data: LoginDto) => {
-        setJudgeName(data.judge.name);
-        setIsLoggedIn(true);
-      });
+    socket?.on('loggedIn', (data: LoginDto) => {
+      setJudgeName(data.judge.name);
+      setIsLoggedIn(true);
+      setloginError(null);
+    });
   }, [socket]);
 
   // Error handling
   useEffect(() => {
-    if (socket)
-      socket.on('error', (data: ErrorDto) => {
-        console.log(data);
-      });
+    socket?.on('error', (data: ErrorDto) => {
+      console.log(data);
+    });
+  }, [socket]);
+
+  // Login error handling
+  useEffect(() => {
+    socket?.on('loginError', () => setloginError('Incorrect username or password'));
   }, [socket]);
 
   const handleLogout = () => setIsLoggedIn(false);
@@ -47,5 +52,9 @@ export default function Home() {
     init();
   }, []);
 
-  return isLoggedIn ? <Main judgeName={judgeName} /> : <Login onLogin={handleLogin} />;
+  return isLoggedIn ? (
+    <Main judgeName={judgeName} />
+  ) : (
+    <Login onLogin={handleLogin} isError={loginError} setIsError={setloginError} />
+  );
 }

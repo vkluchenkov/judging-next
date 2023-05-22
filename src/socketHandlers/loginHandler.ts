@@ -8,7 +8,7 @@ interface LoginHandlerProps {
   socket: IoSocket;
 }
 
-export const LoginHandler = async ({ loginPayload, io, socket }: LoginHandlerProps) => {
+export const loginHandler = async ({ loginPayload, io, socket }: LoginHandlerProps) => {
   try {
     const res = await api.login(loginPayload);
     if (res) {

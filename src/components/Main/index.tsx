@@ -7,14 +7,17 @@ import { MessageScreen } from '../MessageScreen';
 import { useMemo, useState } from 'react';
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import { ScoresPayload } from '../Scoring/types';
+import { ContestInfo } from '@/src/types/main';
 
 declare type View = 'scoring' | 'message' | 'results';
 
 interface MainProps {
-  judgeName: string;
+  contestInfo: ContestInfo;
 }
 
-export const Main: React.FC<MainProps> = ({ judgeName }) => {
+export const Main: React.FC<MainProps> = ({
+  contestInfo: { judgeName, contestName, currentCategory },
+}) => {
   const [view, setView] = useState<View | null>(null);
 
   const scoringHandler = async (results: ScoresPayload) => {
@@ -61,11 +64,7 @@ export const Main: React.FC<MainProps> = ({ judgeName }) => {
 
   return (
     <>
-      <Header
-        currentContest='Dance Weekend in Warsaw'
-        judge={judgeName}
-        currentCategory='Professionals semi-final'
-      />
+      <Header currentContest={contestName} judge={judgeName} currentCategory={currentCategory} />
       {currentView}
 
       {/* temp for dev */}

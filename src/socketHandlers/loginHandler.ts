@@ -9,15 +9,13 @@ interface LoginHandlerProps {
 }
 
 export const LoginHandler = async ({ loginPayload, io, socket }: LoginHandlerProps) => {
-  setTimeout(async () => {
-    try {
-      const res = await api.login(loginPayload);
-      if (res) {
-        const { judge, token } = res;
-        socket.emit('loggedIn', { judge, token });
-      }
-    } catch (error) {
-      socket.emit('loginError');
+  try {
+    const res = await api.login(loginPayload);
+    if (res) {
+      const { judge, token } = res;
+      socket.emit('loggedIn', { judge, token });
     }
-  }, 2000);
+  } catch (error) {
+    socket.emit('loginError');
+  }
 };

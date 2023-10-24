@@ -106,7 +106,7 @@ export const Main: React.FC<MainProps> = ({
         />
       );
     return <MessageScreen message="You've nothing to do, yey!" />;
-  }, [view, contestantsList, contestantUpHandler]);
+  }, [view, contestantsList, contestantUpHandler, contestantDownHandler]);
 
   return (
     <>

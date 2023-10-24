@@ -55,8 +55,8 @@ export default function Home() {
     setIsLoading(true);
     if (socket) {
       const token = localStorage.getItem('token');
-      if (token && socket && !isTokenChecked) {
-        socket?.emit('getMe', token);
+      if (token && !isTokenChecked) {
+        socket.emit('getMe', token);
         setIsTokenChecked(true);
       } else handleLogout();
     }

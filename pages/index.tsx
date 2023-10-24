@@ -14,7 +14,7 @@ export default function Home() {
   const [socket, setSocket] = useState<Socket<DefaultEventsMap, DefaultEventsMap> | null>(null);
   const [contestInfo, setContestInfo] = useState<ContestInfo>({
     contestName: 'Dance Weekend in Warsaw',
-    judgeName: '',
+    judge: undefined,
     currentCategory: 'Adults Professionals semi-final',
   });
   const [loginError, setloginError] = useState<string | null>(null);
@@ -27,7 +27,7 @@ export default function Home() {
     localStorage.setItem('token', data.token);
 
     setContestInfo((prev) => {
-      return { ...prev, judgeName: data.judge.name };
+      return { ...prev, judge: data.judge };
     });
 
     setloginError(null);
@@ -67,11 +67,12 @@ export default function Home() {
     socket?.on('getMeError', handleLogout);
   }, [socket, handleLogout]);
 
+  // Handle login data
   useEffect(() => {
     socket?.on('loggedIn', (data: LoginDto) => onLogin(data));
   }, [socket, onLogin]);
 
-  // Error handling
+  // Generic socket error handling
   useEffect(() => {
     socket?.on('error', (data: ErrorDto) => {
       console.log(data);

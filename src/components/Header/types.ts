@@ -1,5 +1,5 @@
 export interface HeaderProps {
   currentContest: string;
   currentCategory?: string;
-  judge: string;
+  judge: string | undefined;
 }

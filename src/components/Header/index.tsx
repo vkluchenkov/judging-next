@@ -28,7 +28,7 @@ export const Header: React.FC<HeaderProps> = ({ currentContest, currentCategory,
       </div>
       <div css={styles.judge}>
         <Typography variant='body1' data-testid='judge'>
-          Hi {judge}!
+          {judge && `Hi ${judge}!`}
         </Typography>
         <Button size='small' onClick={handleHelp} data-testid='help-button'>
           Call help

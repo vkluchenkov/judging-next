@@ -16,7 +16,7 @@ interface MainProps {
 }
 
 export const Main: React.FC<MainProps> = ({
-  contestInfo: { judgeName, contestName, currentCategory },
+  contestInfo: { judge, contestName, currentCategory },
 }) => {
   const [view, setView] = useState<View | null>(null);
 
@@ -64,7 +64,7 @@ export const Main: React.FC<MainProps> = ({
 
   return (
     <>
-      <Header currentContest={contestName} judge={judgeName} currentCategory={currentCategory} />
+      <Header currentContest={contestName} judge={judge?.name} currentCategory={currentCategory} />
       {currentView}
 
       {/* temp for dev */}

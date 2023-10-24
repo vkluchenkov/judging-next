@@ -1,5 +1,7 @@
+import { Judge } from '../api/types';
+
 export interface ContestInfo {
-  judgeName: string;
+  judge: Judge | undefined;
   contestName: string;
   currentCategory: string;
 }

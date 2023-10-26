@@ -43,6 +43,7 @@ export const CategoryAdmin: React.FC<CategoryAdminProps> = ({
         id: contestant.number,
         number: contestant.number,
         name: contestant.name,
+        categoryTitle: contestant.categoryTitle,
       };
     });
   }, [contestants]);
@@ -56,6 +57,7 @@ export const CategoryAdmin: React.FC<CategoryAdminProps> = ({
         css={styles.grid}
         rows={rows}
         columns={columns}
+        // @ts-ignore
         pageSize={100}
         disableSelectionOnClick
         disableColumnFilter

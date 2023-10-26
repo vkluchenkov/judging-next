@@ -10,4 +10,5 @@ export interface CategoryAdminProps {
 export interface Contestant {
   number: number;
   name: string;
+  categoryTitle: String;
 }

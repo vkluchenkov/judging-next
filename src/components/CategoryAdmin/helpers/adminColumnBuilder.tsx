@@ -19,8 +19,17 @@ export const adminColumnBuilder = (
   const nameColumn: GridColDef = {
     field: 'name',
     headerName: 'Participant',
-    flex: 120,
-    minWidth: 120,
+    flex: 70,
+    minWidth: 70,
+    editable: false,
+    sortable: false,
+  };
+
+  const categoryTitleColumn: GridColDef = {
+    field: 'categoryTitle',
+    headerName: 'Category',
+    flex: 150,
+    minWidth: 150,
     editable: false,
     sortable: false,
   };
@@ -28,7 +37,7 @@ export const adminColumnBuilder = (
   const editColumn: GridColDef = {
     field: 'edit',
     headerName: 'Action',
-    flex: 50,
+    flex: 90,
     editable: false,
     align: 'center',
     headerAlign: 'center',
@@ -50,5 +59,5 @@ export const adminColumnBuilder = (
     },
   };
 
-  return [numberColumn, nameColumn, editColumn];
+  return [numberColumn, nameColumn, categoryTitleColumn, editColumn];
 };

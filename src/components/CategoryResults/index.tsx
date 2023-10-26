@@ -63,6 +63,7 @@ export const CategoryResults: React.FC<CategoryResultsProps> = ({
         css={styles.grid}
         rows={rows}
         columns={columns}
+        // @ts-ignore
         pageSize={100}
         disableSelectionOnClick
         disableColumnFilter

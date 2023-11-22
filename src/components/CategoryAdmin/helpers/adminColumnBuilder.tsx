@@ -11,7 +11,7 @@ export const adminColumnBuilder = (
   const numberColumn: GridColDef = {
     field: 'number',
     headerName: '#',
-    flex: 15,
+    flex: 5,
     editable: false,
     sortable: false,
   };
@@ -25,33 +25,33 @@ export const adminColumnBuilder = (
     sortable: false,
   };
 
-  const categoryTitleColumn: GridColDef = {
-    field: 'categoryTitle',
-    headerName: 'Category',
-    flex: 150,
-    minWidth: 150,
-    editable: false,
-    sortable: false,
-  };
+  // const categoryTitleColumn: GridColDef = {
+  //   field: 'categoryTitle',
+  //   headerName: 'Category',
+  //   flex: 150,
+  //   minWidth: 150,
+  //   editable: false,
+  //   sortable: false,
+  // };
 
   const editColumn: GridColDef = {
     field: 'edit',
     headerName: 'Action',
-    flex: 90,
+    flex: 20,
     editable: false,
-    align: 'center',
+    align: 'right',
     headerAlign: 'center',
     sortable: false,
     renderCell: (params: GridRenderCellParams) => {
       return (
         <>
-          <Button onClick={() => startClickHandler(params)} data-testid='edit-btn'>
+          <Button onClick={() => startClickHandler(params)} data-testid='start-btn'>
             Start
           </Button>
-          <Button onClick={() => upClickHandler(params)} data-testid='edit-btn'>
+          <Button onClick={() => upClickHandler(params)} data-testid='up-btn'>
             ↑
           </Button>
-          <Button onClick={() => downClickHandler(params)} data-testid='edit-btn'>
+          <Button onClick={() => downClickHandler(params)} data-testid='down-btn'>
             ↓
           </Button>
         </>
@@ -59,5 +59,5 @@ export const adminColumnBuilder = (
     },
   };
 
-  return [numberColumn, nameColumn, categoryTitleColumn, editColumn];
+  return [numberColumn, nameColumn, editColumn];
 };

@@ -7,7 +7,13 @@ import { adminColumnBuilder } from './helpers/adminColumnBuilder';
 import { styles } from './styles';
 import { CategoryAdminProps, Contestant } from './types';
 
-export const CategoryAdmin: React.FC<CategoryAdminProps> = ({ currentCategory, contestants }) => {
+export const CategoryAdmin: React.FC<CategoryAdminProps> = ({
+  currentCategory,
+  contestants,
+  onCategoryUp,
+  onCategoryDown,
+  id,
+}) => {
   const [contestantsList, setContestanstsList] = useState<Contestant[]>(contestants);
 
   const onStart = useCallback((number: number) => {
@@ -71,16 +77,22 @@ export const CategoryAdmin: React.FC<CategoryAdminProps> = ({ currentCategory, c
         id: contestant.number,
         number: contestant.number,
         name: contestant.name,
-        categoryTitle: contestant.categoryTitle,
       };
     });
   }, [contestantsList]);
 
   return (
     <Box css={styles.box}>
+      <Button onClick={() => onCategoryUp(id)} data-testid='cat-up-btn'>
+        ↑
+      </Button>
+
       <Typography variant='h5' align='center' data-testid='title'>
         {currentCategory}
       </Typography>
+      <Button onClick={() => onCategoryDown(id)} data-testid='cat-down-btn'>
+        ↓
+      </Button>
       <DataGrid
         css={styles.grid}
         rows={rows}
@@ -91,6 +103,7 @@ export const CategoryAdmin: React.FC<CategoryAdminProps> = ({ currentCategory, c
         disableColumnFilter
         disableColumnMenu
         disableColumnSelector
+        disableRowSelectionOnClick
         disableVirtualization
         hideFooter
         autoHeight

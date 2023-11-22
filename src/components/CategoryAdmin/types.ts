@@ -1,16 +1,17 @@
 export interface CategoryAdminProps {
+  id: number;
   currentCategory: string;
   contestants: Contestant[];
   // onSubmit: () => void;
   // onStart: (number: number) => void;
-  // onUp: (number: number) => void;
-  // onDown: (number: number) => void;
+  onCategoryUp: (id: number) => void;
+  onCategoryDown: (id: number) => void;
 }
 
 export interface Contestant {
   number: number;
   name: string;
-  categoryTitle: String;
+  // categoryTitle: String;
 }
 
 export interface ContestCategory {

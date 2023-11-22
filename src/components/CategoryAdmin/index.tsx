@@ -2,18 +2,46 @@
 
 import { Box, Button, Typography } from '@mui/material';
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { adminColumnBuilder } from './helpers/adminColumnBuilder';
 import { styles } from './styles';
 import { CategoryAdminProps, Contestant } from './types';
 
-export const CategoryAdmin: React.FC<CategoryAdminProps> = ({
-  currentCategory,
-  contestants,
-  onStart,
-  onUp,
-  onDown,
-}) => {
+export const CategoryAdmin: React.FC<CategoryAdminProps> = ({ currentCategory, contestants }) => {
+  const [contestantsList, setContestanstsList] = useState<Contestant[]>(contestants);
+
+  const onStart = useCallback((number: number) => {
+    console.log(`Start ${number}`);
+  }, []);
+
+  const onUp = useCallback(
+    (number: number) => {
+      const idx = contestantsList.findIndex((contestant) => contestant.number === number);
+      if (idx > 0) {
+        setContestanstsList((prev) => {
+          const newList = prev.slice();
+          [newList[idx], newList[idx - 1]] = [newList[idx - 1], newList[idx]];
+          return newList;
+        });
+      }
+    },
+    [contestantsList]
+  );
+
+  const onDown = useCallback(
+    (number: number) => {
+      const idx = contestantsList.findIndex((contestant) => contestant.number === number);
+      if (idx >= 0 && idx < contestantsList.length - 1) {
+        setContestanstsList((prev) => {
+          const newList = prev.slice();
+          [newList[idx], newList[idx + 1]] = [newList[idx + 1], newList[idx]];
+          return newList;
+        });
+      }
+    },
+    [contestantsList]
+  );
+
   const startClickHandler = useCallback(
     (params: GridRenderCellParams<any, Contestant>) => {
       onStart(params.row.number);
@@ -34,11 +62,11 @@ export const CategoryAdmin: React.FC<CategoryAdminProps> = ({
   );
 
   const columns: GridColDef[] = useMemo(() => {
-    return adminColumnBuilder(contestants, startClickHandler, upClickHandler, downClickHandler);
-  }, [contestants, startClickHandler, upClickHandler, downClickHandler]);
+    return adminColumnBuilder(contestantsList, startClickHandler, upClickHandler, downClickHandler);
+  }, [contestantsList, startClickHandler, upClickHandler, downClickHandler]);
 
   const rows = useMemo(() => {
-    return contestants.map((contestant) => {
+    return contestantsList.map((contestant) => {
       return {
         id: contestant.number,
         number: contestant.number,
@@ -46,12 +74,12 @@ export const CategoryAdmin: React.FC<CategoryAdminProps> = ({
         categoryTitle: contestant.categoryTitle,
       };
     });
-  }, [contestants]);
+  }, [contestantsList]);
 
   return (
     <Box css={styles.box}>
       <Typography variant='h5' align='center' data-testid='title'>
-        {currentCategory} participants:
+        {currentCategory}
       </Typography>
       <DataGrid
         css={styles.grid}

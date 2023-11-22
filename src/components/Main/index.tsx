@@ -8,9 +8,7 @@ import { useMemo, useState, useCallback } from 'react';
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import { ScoresPayload } from '../Scoring/types';
 import { ContestInfo } from '@/src/types/main';
-import { CategoryAdmin } from '../CategoryAdmin';
-import { contestants } from '@/src/mocks/contestants';
-import { Contestant } from '../CategoryAdmin/types';
+import { ContestAdmin } from '../ContestAdmin';
 
 declare type View = 'scoring' | 'message' | 'results' | 'admin';
 
@@ -22,7 +20,6 @@ export const Main: React.FC<MainProps> = ({
   contestInfo: { judge, contestName, currentCategory },
 }) => {
   const [view, setView] = useState<View | null>(null);
-  const [contestantsList, setContestanstsList] = useState<Contestant[]>(contestants);
 
   const scoringHandler = async (results: ScoresPayload) => {
     console.log(results);
@@ -32,38 +29,6 @@ export const Main: React.FC<MainProps> = ({
     console.log(`Edit ${number}`);
     setView('scoring');
   };
-
-  const adminStartHandler = (number: number) => {
-    console.log(`Start ${number}`);
-  };
-
-  const contestantUpHandler = useCallback(
-    (number: number) => {
-      const idx = contestantsList.findIndex((contestant) => contestant.number === number);
-      if (idx > 0) {
-        setContestanstsList((prev) => {
-          const newList = prev.slice();
-          [newList[idx], newList[idx - 1]] = [newList[idx - 1], newList[idx]];
-          return newList;
-        });
-      }
-    },
-    [contestantsList]
-  );
-
-  const contestantDownHandler = useCallback(
-    (number: number) => {
-      const idx = contestantsList.findIndex((contestant) => contestant.number === number);
-      if (idx >= 0 && idx < contestantsList.length - 1) {
-        setContestanstsList((prev) => {
-          const newList = prev.slice();
-          [newList[idx], newList[idx + 1]] = [newList[idx + 1], newList[idx]];
-          return newList;
-        });
-      }
-    },
-    [contestantsList]
-  );
 
   const resultsSubmitHandler = () => {
     setView(null);
@@ -95,18 +60,9 @@ export const Main: React.FC<MainProps> = ({
           onSubmit={resultsSubmitHandler}
         />
       );
-    if (view === 'admin')
-      return (
-        <CategoryAdmin
-          currentCategory='Professionals semi-final'
-          contestants={contestantsList}
-          onStart={adminStartHandler}
-          onUp={contestantUpHandler}
-          onDown={contestantDownHandler}
-        />
-      );
+    if (view === 'admin') return <ContestAdmin />;
     return <MessageScreen message="You've nothing to do, yey!" />;
-  }, [view, contestantsList, contestantUpHandler, contestantDownHandler]);
+  }, [view]);
 
   return (
     <>

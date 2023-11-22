@@ -9,6 +9,12 @@ export const styles = createStyles({
     padding: '10px 30px 0 20px',
     gap: '10px',
   },
+  header: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: '15px',
+  },
   grid: {
     '& .MuiDataGrid-cell:focus-within, & .MuiDataGrid-cell:focus': {
       outline: 'none',

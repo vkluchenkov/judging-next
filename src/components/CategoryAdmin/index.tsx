@@ -83,16 +83,17 @@ export const CategoryAdmin: React.FC<CategoryAdminProps> = ({
 
   return (
     <Box css={styles.box}>
-      <Button onClick={() => onCategoryUp(id)} data-testid='cat-up-btn'>
-        ↑
-      </Button>
-
-      <Typography variant='h5' align='center' data-testid='title'>
-        {currentCategory}
-      </Typography>
-      <Button onClick={() => onCategoryDown(id)} data-testid='cat-down-btn'>
-        ↓
-      </Button>
+      <Box css={styles.header}>
+        <Button onClick={() => onCategoryUp(id)} data-testid='cat-up-btn'>
+          ↑
+        </Button>
+        <Typography variant='h5' align='center' data-testid='title'>
+          {currentCategory}
+        </Typography>
+        <Button onClick={() => onCategoryDown(id)} data-testid='cat-down-btn'>
+          ↓
+        </Button>
+      </Box>
       <DataGrid
         css={styles.grid}
         rows={rows}
